@@ -1,15 +1,44 @@
 :root {
-  --font-heading: "Funnel Sans", "Arial Black", sans-serif;
-  --font-body: "Google Sans Code", "Courier New", monospace;
-  --color-dark-purple: #210124;
-  --color-claret: #750d37;
-  --color-celadon: #b3dec1;
-  --color-mint-green: #dbf9f0;
-  --color-baby-powder: #f7f9f7;
-  --color-border: #000000;
-  --shadow-hard-lg: 10px 10px 0 var(--color-border);
-  --shadow-hard-md: 6px 6px 0 var(--color-border);
-  --shadow-hard-sm: 3px 3px 0 var(--color-border);
+  /* Cyberpunk Academic Typography */
+  --font-heading: "Space Grotesk", "Orbitron", "JetBrains Mono", monospace;
+  --font-body: "IBM Plex Mono", "Fira Code", "Consolas", monospace;
+  --font-accent: "Bebas Neue", "Russo One", sans-serif;
+
+  /* Neon Cyberpunk Color Palette */
+  --color-electric-blue: #00d4ff;
+  --color-neon-pink: #ff10f0;
+  --color-deep-purple: #1a0033;
+  --color-dark-cyber: #0a0e1a;
+  --color-holographic: #b388ff;
+  --color-cyan-glow: #00ffff;
+  --color-magenta-flash: #ff0080;
+  --color-data-green: #00ff88;
+  --color-terminal-green: #39ff14;
+  --color-metallic-silver: #e0e0e0;
+  --color-warning: #ff6b35;
+
+  /* Dark Academic Base */
+  --color-surface-dark: #0d1117;
+  --color-surface-medium: #161b22;
+  --color-surface-light: #1c2128;
+  --color-text-primary: #f0f6fc;
+  --color-text-secondary: #8b949e;
+  --color-text-accent: #58a6ff;
+
+  /* Shadow System with Glow Effects */
+  --shadow-neon-blue: 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 60px #00d4ff;
+  --shadow-neon-pink: 0 0 20px #ff10f0, 0 0 40px #ff10f0;
+  --shadow-cyber-border: 2px 0 #00d4ff, -2px 0 #ff10f0, 0 2px #00d4ff, 0 -2px #ff10f0;
+  --shadow-glitch: 3px 3px 0 #ff0080, -2px -2px 0 #00ffff;
+  --shadow-depth-sm: 4px 4px 0 rgba(0, 212, 255, 0.3);
+  --shadow-depth-md: 8px 8px 0 rgba(0, 212, 255, 0.4);
+  --shadow-depth-lg: 12px 12px 0 rgba(0, 212, 255, 0.5);
+
+  /* Animation Timing */
+  --animation-fast: 0.15s;
+  --animation-medium: 0.3s;
+  --animation-slow: 0.6s;
+  --animation-glitch: 0.2s;
 }
 
 * {
@@ -18,16 +47,66 @@
 
 body {
   font-family: var(--font-body);
-  color: var(--color-dark-purple);
-  background: radial-gradient(
-    circle at top,
-    var(--color-mint-green),
-    var(--color-celadon) 55%,
-    var(--color-baby-powder)
-  );
+  color: var(--color-text-primary);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.15), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 16, 240, 0.1), transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(179, 136, 255, 0.08), transparent 50%),
+    linear-gradient(135deg, #0a0e1a 0%, #1a0033 25%, #0d1117 50%, #161b22 75%, #0a0e1a 100%);
   margin: 0;
   min-height: 100vh;
   padding: 2rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Cyberpunk grid overlay effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 1;
+  animation: grid-move 20s linear infinite;
+}
+
+@keyframes grid-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* Data stream particles */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 136, 0.1) 2px,
+      rgba(0, 255, 136, 0.1) 4px
+    );
+  background-size: 100px 100px;
+  animation: data-stream 8s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes data-stream {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100px); }
 }
 
 h1,
@@ -37,7 +116,53 @@ h4,
 h5 {
   font-family: var(--font-heading);
   font-weight: 700;
-  color: var(--color-dark-purple);
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+/* Glitch text effect for headings */
+h1::before,
+h2::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px;
+  top: 0;
+  color: var(--color-cyan-glow);
+  opacity: 0.8;
+  z-index: -1;
+  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+h1::after,
+h2::after {
+  content: attr(data-text);
+  position: absolute;
+  left: -2px;
+  top: 0;
+  color: var(--color-magenta-flash);
+  opacity: 0.8;
+  z-index: -1;
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip-path: inset(33% 0 40% 0); }
+  20% { clip-path: inset(10% 0 60% 0); }
+  40% { clip-path: inset(50% 0 30% 0); }
+  60% { clip-path: inset(80% 0 5% 0); }
+  80% { clip-path: inset(5% 0 85% 0); }
+  100% { clip-path: inset(45% 0 35% 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip-path: inset(60% 0 20% 0); }
+  30% { clip-path: inset(20% 0 60% 0); }
+  50% { clip-path: inset(70% 0 10% 0); }
+  70% { clip-path: inset(15% 0 75% 0); }
+  90% { clip-path: inset(85% 0 5% 0); }
+  100% { clip-path: inset(35% 0 55% 0); }
 }
 
 @media (max-width: 640px) {
@@ -50,25 +175,99 @@ h5 {
   max-width: 960px;
   margin: 0 auto;
   padding: 2.5rem;
-  background: var(--color-baby-powder);
-  border: 5px solid var(--color-border);
-  box-shadow: var(--shadow-hard-lg);
+  background:
+    linear-gradient(135deg, rgba(13, 17, 23, 0.95) 0%, rgba(22, 27, 34, 0.9) 100%),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(0, 212, 255, 0.03) 10px,
+      rgba(0, 212, 255, 0.03) 20px
+    );
+  border: 3px solid var(--color-electric-blue);
+  position: relative;
+  box-shadow:
+    var(--shadow-neon-blue),
+    var(--shadow-depth-lg),
+    inset 0 0 30px rgba(0, 212, 255, 0.1);
+  backdrop-filter: blur(10px);
+  z-index: 2;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  animation: container-glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes container-glow {
+  0% { border-color: var(--color-electric-blue); }
+  50% { border-color: var(--color-neon-pink); }
+  100% { border-color: var(--color-holographic); }
+}
+
+/* Corner decoration elements */
+.askmaster::before,
+.askmaster::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--color-cyan-glow);
+  z-index: 3;
+}
+
+.askmaster::before {
+  top: 10px;
+  left: 10px;
+  border-right: none;
+  border-bottom: none;
+  animation: corner-pulse 2s ease-in-out infinite;
+}
+
+.askmaster::after {
+  bottom: 10px;
+  right: 10px;
+  border-left: none;
+  border-top: none;
+  animation: corner-pulse 2s ease-in-out infinite 1s;
+}
+
+@keyframes corner-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
 }
 
 .askmaster header {
   text-align: center;
   margin-bottom: 2.5rem;
-  padding: 1.5rem;
-  border: 4px solid var(--color-border);
-  background: var(--color-mint-green);
-  box-shadow: var(--shadow-hard-md);
+  padding: 2rem;
+  background:
+    linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 16, 240, 0.05) 100%),
+    rgba(13, 17, 23, 0.8);
+  border: 2px solid var(--color-neon-pink);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    var(--shadow-neon-pink),
+    var(--shadow-depth-md),
+    inset 0 0 20px rgba(255, 16, 240, 0.1);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 15px) 100%, 15px 100%);
 }
 
 .askmaster h1 {
   font-size: 3rem;
   margin: 0;
+  background: linear-gradient(45deg, var(--color-electric-blue), var(--color-neon-pink), var(--color-holographic));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+  animation: text-flicker 3s ease-in-out infinite;
 }
-/* Icon styles */
+
+@keyframes text-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.95; }
+  75% { opacity: 1; }
+}
+/* Cyberpunk Icon styles */
 .icon {
   display: inline-flex;
   align-items: center;
@@ -77,18 +276,35 @@ h5 {
   height: 1.2em;
   vertical-align: middle;
   margin-right: 0.3em;
+  filter: drop-shadow(0 0 10px currentColor);
+  animation: icon-pulse 2s ease-in-out infinite;
 }
 
 .logo-icon {
   width: 1.5em;
   height: 1.5em;
   margin-right: 0.2em;
+  filter:
+    drop-shadow(0 0 15px var(--color-electric-blue))
+    drop-shadow(0 0 25px var(--color-neon-pink));
+  animation: logo-glow 3s ease-in-out infinite alternate;
 }
 
 .icon svg {
   width: 100%;
   height: 100%;
   fill: currentColor;
+  transition: fill var(--animation-medium) ease;
+}
+
+@keyframes icon-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes logo-glow {
+  0% { filter: drop-shadow(0 0 15px var(--color-electric-blue)) drop-shadow(0 0 25px var(--color-neon-pink)); }
+  100% { filter: drop-shadow(0 0 25px var(--color-cyan-glow)) drop-shadow(0 0 35px var(--color-magenta-flash)); }
 }
 
 .askmaster h2 {
@@ -104,16 +320,51 @@ h5 {
 .askmaster header p {
   font-size: 1.1rem;
   margin: 0.5rem 0 0;
+  color: var(--color-text-secondary);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
 }
 
 .askmaster .generation-form,
 .askmaster .quiz,
 .askmaster .results,
 .askmaster .ready-state {
-  background: var(--color-mint-green);
-  border: 4px solid var(--color-border);
+  background:
+    linear-gradient(135deg, rgba(28, 33, 40, 0.95) 0%, rgba(13, 17, 23, 0.9) 100%),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 20px,
+      rgba(0, 255, 136, 0.02) 20px,
+      rgba(0, 255, 136, 0.02) 40px
+    );
+  border: 2px solid var(--color-cyan-glow);
   padding: 2rem;
-  box-shadow: var(--shadow-hard-md);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    var(--shadow-cyber-border),
+    var(--shadow-depth-md),
+    inset 0 0 25px rgba(0, 255, 136, 0.05);
+  backdrop-filter: blur(5px);
+}
+
+.askmaster .generation-form::before,
+.askmaster .quiz::before,
+.askmaster .results::before,
+.askmaster .ready-state::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-electric-blue), transparent);
+  animation: scan-line 4s linear infinite;
+}
+
+@keyframes scan-line {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
 .askmaster .form-group {
@@ -125,9 +376,28 @@ h5 {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 700;
-  color: var(--color-dark-purple);
+  color: var(--color-terminal-green);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.askmaster label::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-neon-pink);
+  font-size: 0.7rem;
+  animation: label-blink 2s ease-in-out infinite;
+}
+
+@keyframes label-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
 .askmaster input[type="text"],
@@ -135,30 +405,49 @@ h5 {
 .askmaster select {
   width: 100%;
   padding: 0.85rem 1rem;
-  background: var(--color-baby-powder);
-  border: 3px solid var(--color-border);
+  background:
+    linear-gradient(135deg, rgba(13, 17, 23, 0.9) 0%, rgba(28, 33, 40, 0.8) 100%);
+  border: 2px solid var(--color-holographic);
   font-size: 1.1rem;
   font-family: var(--font-body);
-  box-shadow: var(--shadow-hard-sm);
+  color: var(--color-text-primary);
+  box-shadow:
+    0 0 15px rgba(179, 136, 255, 0.3),
+    inset 0 0 10px rgba(0, 212, 255, 0.1);
   transition:
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
+    all var(--animation-medium) ease,
+    box-shadow var(--animation-fast) ease;
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 10px 100%);
 }
 
 .askmaster input[type="text"]:focus,
 .askmaster input[type="number"]:focus,
 .askmaster select:focus {
   outline: none;
-  border-color: var(--color-dark-purple);
+  border-color: var(--color-electric-blue);
   box-shadow:
-    var(--shadow-hard-sm),
-    0 0 0 3px var(--color-celadon);
+    0 0 25px rgba(0, 212, 255, 0.6),
+    0 0 40px rgba(0, 212, 255, 0.3),
+    inset 0 0 15px rgba(0, 212, 255, 0.2);
+  background:
+    linear-gradient(135deg, rgba(13, 17, 23, 0.95) 0%, rgba(28, 33, 40, 0.9) 100%);
+  transform: translateY(-1px);
+}
+
+.askmaster input[type="text"]:hover,
+.askmaster input[type="number"]:hover,
+.askmaster select:hover {
+  border-color: var(--color-cyan-glow);
+  box-shadow:
+    0 0 20px rgba(0, 255, 255, 0.4),
+    inset 0 0 12px rgba(0, 255, 255, 0.1);
 }
 
 .askmaster .helper-text {
   margin-top: 0.35rem;
   font-size: 0.9rem;
-  color: #333333;
+  color: var(--color-text-secondary);
 }
 
 .askmaster .helper-text code {
@@ -216,45 +505,117 @@ h5 {
   flex: 1;
   appearance: none;
   height: 10px;
-  background: var(--color-celadon);
-  border: 2px solid var(--color-border);
-  box-shadow: var(--shadow-hard-sm);
+  background: rgba(13, 17, 23, 0.8);
+  border: 2px solid var(--color-holographic);
+  box-shadow:
+    0 0 10px rgba(179, 136, 255, 0.3),
+    inset 0 0 5px rgba(0, 212, 255, 0.1);
+  border-radius: 2px;
 }
 
 .askmaster input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 20px;
   height: 20px;
-  background: var(--color-claret);
-  border: 2px solid var(--color-border);
-  box-shadow: var(--shadow-hard-sm);
+  background:
+    linear-gradient(135deg, var(--color-electric-blue) 0%, var(--color-cyan-glow) 100%);
+  border: 2px solid var(--color-holographic);
+  box-shadow:
+    0 0 15px rgba(0, 212, 255, 0.6),
+    var(--shadow-depth-sm);
   cursor: pointer;
+  transition: all var(--animation-fast) ease;
+}
+
+.askmaster input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow:
+    0 0 25px rgba(0, 212, 255, 0.8),
+    var(--shadow-depth-md);
+  transform: scale(1.1);
 }
 
 .askmaster input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: var(--color-claret);
-  border: 2px solid var(--color-border);
-  box-shadow: var(--shadow-hard-sm);
+  background:
+    linear-gradient(135deg, var(--color-electric-blue) 0%, var(--color-cyan-glow) 100%);
+  border: 2px solid var(--color-holographic);
+  box-shadow:
+    0 0 15px rgba(0, 212, 255, 0.6),
+    var(--shadow-depth-sm);
   cursor: pointer;
+  transition: all var(--animation-fast) ease;
+}
+
+.askmaster input[type="range"]::-moz-range-thumb:hover {
+  box-shadow:
+    0 0 25px rgba(0, 212, 255, 0.8),
+    var(--shadow-depth-md);
+  transform: scale(1.1);
 }
 
 .askmaster .temperature-value {
   font-weight: 700;
   min-width: 2.4rem;
   text-align: right;
+  color: var(--color-electric-blue);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+  font-family: var(--font-heading);
 }
 
 .askmaster .error {
-  background: var(--color-claret);
-  color: var(--color-baby-powder);
+  background:
+    linear-gradient(135deg, rgba(255, 16, 240, 0.2) 0%, rgba(255, 0, 128, 0.1) 100%);
+  color: var(--color-warning);
   padding: 1rem;
-  border: 3px solid var(--color-border);
-  box-shadow: var(--shadow-hard-sm);
+  border: 2px solid var(--color-magenta-flash);
+  box-shadow:
+    0 0 25px rgba(255, 16, 240, 0.6),
+    0 0 40px rgba(255, 16, 240, 0.3),
+    var(--shadow-depth-sm),
+    inset 0 0 15px rgba(255, 16, 240, 0.1);
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  animation: error-glitch 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes error-glitch {
+  0% {
+    border-color: var(--color-magenta-flash);
+    box-shadow:
+      0 0 25px rgba(255, 16, 240, 0.6),
+      0 0 40px rgba(255, 16, 240, 0.3),
+      var(--shadow-depth-sm),
+      inset 0 0 15px rgba(255, 16, 240, 0.1);
+  }
+  100% {
+    border-color: var(--color-warning);
+    box-shadow:
+      0 0 30px rgba(255, 107, 53, 0.8),
+      0 0 45px rgba(255, 107, 53, 0.5),
+      var(--shadow-depth-sm),
+      inset 0 0 20px rgba(255, 107, 53, 0.15);
+  }
+}
+
+/* Error scanning effect */
+.askmaster .error::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: error-scan 2s linear infinite;
+}
+
+@keyframes error-scan {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
 .askmaster .action-row {
@@ -273,21 +634,23 @@ h5 {
 .askmaster .download-btn {
   width: 100%;
   padding: 1rem 1.5rem;
-  border: 3px solid var(--color-border);
+  border: 2px solid var(--color-neon-pink);
   font-family: var(--font-body);
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
   text-transform: uppercase;
-  box-shadow: var(--shadow-hard-sm);
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
   transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    filter 0.15s ease;
+    all var(--animation-fast) ease,
+    transform var(--animation-fast) ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
+  clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
 }
 
 /* Slightly enlarge icons inside action buttons so they stand out */
@@ -295,23 +658,62 @@ h5 {
 .askmaster .download-btn .icon {
   width: 1.45em;
   height: 1.45em;
-  margin-right: 0.45em; /* slightly more space */
+  margin-right: 0.45em;
+  filter: drop-shadow(0 0 10px currentColor);
 }
 
 .askmaster .generate-btn {
-  background: var(--color-claret);
-  color: var(--color-baby-powder);
+  background:
+    linear-gradient(135deg, var(--color-magenta-flash) 0%, var(--color-neon-pink) 100%);
+  color: var(--color-text-primary);
+  box-shadow:
+    0 0 20px rgba(255, 16, 240, 0.6),
+    0 0 40px rgba(255, 16, 240, 0.3),
+    var(--shadow-depth-sm);
 }
 
 .askmaster .download-btn {
-  background: var(--color-celadon);
-  color: var(--color-dark-purple);
+  background:
+    linear-gradient(135deg, var(--color-data-green) 0%, var(--color-terminal-green) 100%);
+  color: var(--color-surface-dark);
+  box-shadow:
+    0 0 20px rgba(0, 255, 136, 0.6),
+    0 0 40px rgba(0, 255, 136, 0.3),
+    var(--shadow-depth-sm);
 }
 
 .askmaster .generate-btn:hover:not(:disabled),
 .askmaster .download-btn:hover:not(:disabled) {
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-hard-md);
+  transform: translateY(-2px) translateX(1px);
+  box-shadow:
+    0 0 30px rgba(255, 16, 240, 0.8),
+    0 0 50px rgba(255, 16, 240, 0.4),
+    var(--shadow-depth-md);
+}
+
+.askmaster .download-btn:hover:not(:disabled) {
+  box-shadow:
+    0 0 30px rgba(0, 255, 136, 0.8),
+    0 0 50px rgba(0, 255, 136, 0.4),
+    var(--shadow-depth-md);
+}
+
+/* Button scanning effect */
+.askmaster .generate-btn::before,
+.askmaster .download-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--animation-medium) ease;
+}
+
+.askmaster .generate-btn:hover::before,
+.askmaster .download-btn:hover::before {
+  left: 100%;
 }
 
 .askmaster button:disabled {
@@ -325,16 +727,49 @@ h5 {
 
 .askmaster .progress-bar {
   width: 100%;
-  height: 10px;
-  background: var(--color-baby-powder);
-  border: 3px solid var(--color-border);
-  box-shadow: var(--shadow-hard-sm);
+  height: 12px;
+  background: rgba(13, 17, 23, 0.8);
+  border: 2px solid var(--color-cyan-glow);
+  box-shadow:
+    0 0 15px rgba(0, 255, 255, 0.3),
+    inset 0 0 10px rgba(0, 255, 255, 0.1);
   margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 100%, 5px 100%);
 }
 
 .askmaster .progress-fill {
   height: 100%;
-  background: var(--color-dark-purple);
+  background:
+    linear-gradient(90deg, var(--color-electric-blue) 0%, var(--color-cyan-glow) 50%, var(--color-electric-blue) 100%);
+  background-size: 200% 100%;
+  animation: progress-scan 2s linear infinite;
+  box-shadow:
+    0 0 20px rgba(0, 212, 255, 0.8),
+    0 0 30px rgba(0, 212, 255, 0.5);
+  position: relative;
+}
+
+.askmaster .progress-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: progress-shine 3s linear infinite;
+}
+
+@keyframes progress-scan {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes progress-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .askmaster .question-container h3 {
@@ -352,24 +787,40 @@ h5 {
   align-items: center;
   gap: 1rem;
   padding: 1rem 1.25rem;
-  background: var(--color-baby-powder);
-  border: 3px solid var(--color-border);
+  background:
+    linear-gradient(135deg, rgba(28, 33, 40, 0.9) 0%, rgba(13, 17, 23, 0.8) 100%);
+  border: 2px solid var(--color-holographic);
   font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
   text-align: left;
   cursor: pointer;
   transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
+    all var(--animation-medium) ease,
+    transform var(--animation-fast) ease;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 8px 100%);
 }
 
 .askmaster .answer-btn:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: var(--shadow-hard-sm);
+  transform: translateY(-2px) translateX(1px);
+  border-color: var(--color-electric-blue);
+  box-shadow:
+    0 0 25px rgba(0, 212, 255, 0.6),
+    0 0 40px rgba(0, 212, 255, 0.3),
+    var(--shadow-depth-sm);
 }
 
 .askmaster .answer-btn.selected {
-  background: var(--color-celadon);
-  border-color: var(--color-dark-purple);
+  background:
+    linear-gradient(135deg, rgba(179, 136, 255, 0.3) 0%, rgba(0, 212, 255, 0.2) 100%);
+  border-color: var(--color-neon-pink);
+  box-shadow:
+    0 0 20px rgba(255, 16, 240, 0.6),
+    0 0 35px rgba(255, 16, 240, 0.3),
+    inset 0 0 15px rgba(255, 16, 240, 0.1);
 }
 
 .askmaster .answer-letter {
@@ -378,14 +829,47 @@ h5 {
   justify-content: center;
   width: 2rem;
   height: 2rem;
-  background: var(--color-mint-green);
-  border: 2px solid var(--color-border);
+  background:
+    linear-gradient(135deg, var(--color-cyan-glow) 0%, var(--color-electric-blue) 100%);
+  border: 2px solid var(--color-holographic);
   font-weight: 700;
+  color: var(--color-surface-dark);
+  box-shadow:
+    0 0 15px rgba(0, 255, 255, 0.5),
+    var(--shadow-depth-sm);
+  transition: all var(--animation-fast) ease;
 }
 
 .askmaster .answer-btn.selected .answer-letter {
-  background: var(--color-dark-purple);
-  color: var(--color-baby-powder);
+  background:
+    linear-gradient(135deg, var(--color-neon-pink) 0%, var(--color-magenta-flash) 100%);
+  border-color: var(--color-cyan-glow);
+  color: var(--color-text-primary);
+  box-shadow:
+    0 0 20px rgba(255, 16, 240, 0.8),
+    0 0 30px rgba(255, 16, 240, 0.5);
+  animation: answer-pulse 1s ease-in-out infinite;
+}
+
+@keyframes answer-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Answer button scanning effect */
+.askmaster .answer-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+  transition: left var(--animation-medium) ease;
+}
+
+.askmaster .answer-btn:hover::before {
+  left: 100%;
 }
 
 .askmaster .navigation {
@@ -394,29 +878,48 @@ h5 {
   align-items: center;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 3px solid var(--color-border);
+  border-top: 2px solid var(--color-holographic);
+  box-shadow: 0 -1px 0 rgba(0, 212, 255, 0.3);
 }
 
 .askmaster .nav-btn {
   padding: 0.75rem 1.75rem;
-  border: 3px solid var(--color-border);
-  background: var(--color-baby-powder);
-  box-shadow: var(--shadow-hard-sm);
+  border: 2px solid var(--color-holographic);
+  background:
+    linear-gradient(135deg, rgba(28, 33, 40, 0.9) 0%, rgba(13, 17, 23, 0.8) 100%);
+  box-shadow:
+    0 0 15px rgba(179, 136, 255, 0.3),
+    var(--shadow-depth-sm);
   font-weight: 700;
   cursor: pointer;
+  color: var(--color-text-primary);
+  transition: all var(--animation-medium) ease;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 8px 100%);
 }
 
 .askmaster .nav-btn:hover:not(:disabled) {
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-hard-md);
+  transform: translateY(-2px) translateX(1px);
+  border-color: var(--color-cyan-glow);
+  box-shadow:
+    0 0 25px rgba(0, 255, 255, 0.6),
+    0 0 40px rgba(0, 255, 255, 0.3),
+    var(--shadow-depth-md);
 }
 
 .askmaster .question-indicator {
   font-weight: 700;
+  color: var(--color-text-secondary);
 }
 
 .askmaster .question-indicator.answered {
-  color: var(--color-claret);
+  color: var(--color-terminal-green);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+  animation: indicator-pulse 1s ease-in-out infinite;
+}
+
+@keyframes indicator-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
 }
 
 .askmaster .score-display {
@@ -431,10 +934,50 @@ h5 {
   justify-content: center;
   width: 140px;
   height: 140px;
-  background: var(--color-baby-powder);
-  border: 5px solid var(--color-border);
-  box-shadow: var(--shadow-hard-md);
+  background:
+    linear-gradient(135deg, rgba(28, 33, 40, 0.95) 0%, rgba(13, 17, 23, 0.9) 100%);
+  border: 3px solid var(--color-electric-blue);
+  box-shadow:
+    0 0 30px rgba(0, 212, 255, 0.6),
+    0 0 50px rgba(0, 212, 255, 0.3),
+    var(--shadow-depth-md),
+    inset 0 0 20px rgba(0, 212, 255, 0.1);
   margin-bottom: 1rem;
+  position: relative;
+  animation: score-pulse 2s ease-in-out infinite;
+}
+
+.askmaster .score-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-electric-blue);
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+  font-family: var(--font-heading);
+}
+
+.askmaster .score-total {
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+@keyframes score-pulse {
+  0%, 100% {
+    border-color: var(--color-electric-blue);
+    box-shadow:
+      0 0 30px rgba(0, 212, 255, 0.6),
+      0 0 50px rgba(0, 212, 255, 0.3),
+      var(--shadow-depth-md),
+      inset 0 0 20px rgba(0, 212, 255, 0.1);
+  }
+  50% {
+    border-color: var(--color-neon-pink);
+    box-shadow:
+      0 0 40px rgba(255, 16, 240, 0.8),
+      0 0 60px rgba(255, 16, 240, 0.5),
+      var(--shadow-depth-md),
+      inset 0 0 25px rgba(255, 16, 240, 0.15);
+  }
 }
 
 .askmaster .answer-review {
@@ -442,35 +985,57 @@ h5 {
 }
 
 .askmaster .question-review {
-  background: var(--color-baby-powder);
+  background:
+    linear-gradient(135deg, rgba(28, 33, 40, 0.9) 0%, rgba(13, 17, 23, 0.8) 100%);
   padding: 1.25rem;
-  border: 3px solid var(--color-border);
-  box-shadow: var(--shadow-hard-sm);
+  border: 2px solid var(--color-holographic);
+  box-shadow:
+    0 0 15px rgba(179, 136, 255, 0.3),
+    var(--shadow-depth-sm);
   margin-bottom: 1rem;
+  color: var(--color-text-primary);
 }
 
 .askmaster .question-review.correct {
-  background: var(--color-celadon);
-  border-color: var(--color-dark-purple);
+  background:
+    linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(57, 255, 20, 0.1) 100%);
+  border-color: var(--color-terminal-green);
+  box-shadow:
+    0 0 20px rgba(0, 255, 136, 0.4),
+    0 0 30px rgba(0, 255, 136, 0.2),
+    var(--shadow-depth-sm),
+    inset 0 0 15px rgba(0, 255, 136, 0.1);
 }
 
 .askmaster .question-review.incorrect {
-  background: #ffe1ea;
-  border-color: var(--color-claret);
+  background:
+    linear-gradient(135deg, rgba(255, 16, 240, 0.15) 0%, rgba(255, 0, 128, 0.1) 100%);
+  border-color: var(--color-magenta-flash);
+  box-shadow:
+    0 0 20px rgba(255, 16, 240, 0.4),
+    0 0 30px rgba(255, 16, 240, 0.2),
+    var(--shadow-depth-sm),
+    inset 0 0 15px rgba(255, 16, 240, 0.1);
 }
 
 .askmaster .answer-option {
   padding: 0.5rem 0.75rem;
   border-left: 3px solid transparent;
+  color: var(--color-text-secondary);
+  font-weight: 500;
 }
 
 .askmaster .answer-option.selected {
-  background: var(--color-mint-green);
-  border-left-color: var(--color-dark-purple);
+  background: rgba(179, 136, 255, 0.1);
+  border-left-color: var(--color-neon-pink);
+  color: var(--color-text-primary);
+  font-weight: 600;
 }
 
 .askmaster .answer-option.correct {
+  color: var(--color-terminal-green);
   font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 .askmaster .action-buttons {
@@ -482,27 +1047,69 @@ h5 {
 .askmaster .restart-btn,
 .askmaster .new-quiz-btn {
   padding: 1rem 2.5rem;
-  border: 3px solid var(--color-border);
+  border: 2px solid var(--color-neon-pink);
   font-weight: 700;
+  font-size: 1rem;
   text-transform: uppercase;
-  box-shadow: var(--shadow-hard-sm);
+  letter-spacing: 0.05em;
+  box-shadow:
+    0 0 20px rgba(255, 16, 240, 0.4),
+    var(--shadow-depth-sm);
   cursor: pointer;
+  transition: all var(--animation-medium) ease;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
 }
 
 .askmaster .restart-btn {
-  background: var(--color-claret);
-  color: var(--color-baby-powder);
+  background:
+    linear-gradient(135deg, var(--color-magenta-flash) 0%, var(--color-neon-pink) 100%);
+  color: var(--color-text-primary);
 }
 
 .askmaster .new-quiz-btn {
-  background: var(--color-celadon);
-  color: var(--color-dark-purple);
+  background:
+    linear-gradient(135deg, var(--color-data-green) 0%, var(--color-terminal-green) 100%);
+  color: var(--color-surface-dark);
+  border-color: var(--color-terminal-green);
+  box-shadow:
+    0 0 20px rgba(0, 255, 136, 0.4),
+    var(--shadow-depth-sm);
 }
 
 .askmaster .restart-btn:hover,
 .askmaster .new-quiz-btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-hard-md);
+  transform: translateY(-2px) translateX(1px);
+  box-shadow:
+    0 0 30px rgba(255, 16, 240, 0.6),
+    0 0 50px rgba(255, 16, 240, 0.3),
+    var(--shadow-depth-md);
+}
+
+.askmaster .new-quiz-btn:hover {
+  box-shadow:
+    0 0 30px rgba(0, 255, 136, 0.6),
+    0 0 50px rgba(0, 255, 136, 0.3),
+    var(--shadow-depth-md);
+}
+
+/* Button scanning effect */
+.askmaster .restart-btn::before,
+.askmaster .new-quiz-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--animation-medium) ease;
+}
+
+.askmaster .restart-btn:hover::before,
+.askmaster .new-quiz-btn:hover::before {
+  left: 100%;
 }
 
 @media (max-width: 768px) {

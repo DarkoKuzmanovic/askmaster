@@ -167,14 +167,14 @@
 
 <div class="askmaster">
 	<header>
-		<h1><span class="icon logo-icon">{@html logoIcon}</span> AskMaster</h1>
+		<h1 data-text="AskMaster"><span class="icon logo-icon">{@html logoIcon}</span> AskMaster</h1>
 		<p>Generate AI-powered multiple-choice questions on any topic!</p>
 	</header>
 
 	<main>
 		{#if questions.length === 0}
 			<section class="generation-form">
-				<h2>Generate Questions</h2>
+				<h2 data-text="Generate Questions">Generate Questions</h2>
 				<form on:submit|preventDefault={generateQuestions}>
 					<div class="form-group">
 						<label for="topic">Topic *</label>
@@ -251,7 +251,7 @@
 			</section>
 		{:else if showResults}
 			<section class="results">
-				<h2>Quiz Results</h2>
+				<h2 data-text="Quiz Results">Quiz Results</h2>
 				<div class="score-display">
 					<div class="score-circle">
 						<span class="score-number">{score}</span>
@@ -308,7 +308,7 @@
 			</section>
 		{:else if !quizStarted}
 			<section class="ready-state">
-				<h2>Questions Ready!</h2>
+				<h2 data-text="Questions Ready!">Questions Ready!</h2>
 				<p>
 					We generated {questions.length} question{questions.length === 1 ? '' : 's'} for
 					<strong>{topic || 'your topic'}</strong>. Choose what to do next.
