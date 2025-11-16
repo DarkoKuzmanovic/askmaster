@@ -5,7 +5,11 @@
       "Bash(npm run check:*)",
       "Bash(npm run dev:*)",
       "Bash(curl:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Skill(frontend-design)",
+      "mcp__oraios_serena__list_dir",
+      "mcp__oraios_serena__find_file",
+      "mcp__oraios_serena__activate_project"
     ],
     "deny": [],
     "ask": []

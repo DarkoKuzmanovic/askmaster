@@ -1,4 +1,3 @@
-
 <script lang="ts">
 	export let data: { customConfigured?: boolean; customConfigParts?: { hasKey: boolean; hasModel: boolean; hasUrl: boolean } };
 	import logoIcon from '$lib/assets/logo.svg?raw';
@@ -376,3 +375,56 @@
 		{/if}
 	</main>
 </div>
+
+<!-- Decorative elements for neobrutalist aesthetic -->
+<div class="decorative-shape shape-1"></div>
+<div class="decorative-shape shape-2"></div>
+<div class="decorative-shape shape-3"></div>
+
+<style>
+	/* Decorative shapes for asymmetric layout */
+	.decorative-shape {
+		position: fixed;
+		z-index: -1;
+		opacity: 0.6;
+	}
+
+	.shape-1 {
+		top: 10%;
+		left: 5%;
+		width: 150px;
+		height: 150px;
+		background: var(--color-claret);
+		border: 5px solid var(--color-border);
+		box-shadow: var(--shadow-hard-lg);
+		transform: rotate(15deg);
+	}
+
+	.shape-2 {
+		bottom: 15%;
+		right: 8%;
+		width: 100px;
+		height: 100px;
+		background: var(--color-celadon);
+		border: 4px solid var(--color-border);
+		box-shadow: var(--shadow-hard-md);
+		transform: rotate(-10deg);
+	}
+
+	.shape-3 {
+		top: 50%;
+		right: 15%;
+		width: 80px;
+		height: 80px;
+		background: var(--color-mint-green);
+		border: 3px solid var(--color-border);
+		box-shadow: var(--shadow-hard-sm);
+		transform: rotate(45deg);
+	}
+
+	@media (max-width: 768px) {
+		.decorative-shape {
+			display: none;
+		}
+	}
+</style>
